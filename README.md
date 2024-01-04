@@ -9,7 +9,7 @@ Try it out at http://pamelafox.github.io/vectors-comparison/.
 
 ![Screenshot of website for word "dog" showing vector across both Word2Vec and OpenAI models](screenshot.png)
 
-Based on (word2vecjson)[https://github.com/turbomaze/word2vecjson] by [Anthony Liu](http://anthony.ai).
+Based on [word2vecjson](https://github.com/turbomaze/word2vecjson) by [Anthony Liu](http://anthony.ai).
 
 ## License
 
