@@ -1,12 +1,16 @@
-Word2Vec JSON
-==================
+Word2Vec and OpenAI Vector Embeddings
+=====================================
 
-[Word2vec](https://code.google.com/p/word2vec/) represents words as vectors whose components encompass what the words mean. Algebraic operations on those vectors, like "king" - "man" + "woman", yield intuitively correct results, like "queen". This project provides the word vectors for the 1000, 5000, 10000, and 25000 most common English words in JSON.
+This project shows examples of vector embeddings from two language models, [Word2Vec](https://code.google.com/p/word2vec/) and [OpenAI's text-embedding-ada-002 model](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings), using a selection of 1000 words.
 
-Demo at http://turbomaze.github.io/word2vecjson/.
+For each word, the website shows the vector embedding and the 10 most similar words according to cosine similarity.
 
-## Usage
-To use these vectors in a project, include the `data/wordvecs10000.js` file and you're set. It's a JS object whose keys are words and values are word vectors (arrays of doubles). Included in this project is a script (`assets/js/word2vecutils.js`) with some common utility functions for playing around with word vectors.
+Try it out at http://pamelafox.github.io/vectors-comparison/.
+
+![Screenshot of website for word "dog" showing vector across both Word2Vec and OpenAI models](screenshot.png)
+
+Based on (word2vecjson)[https://github.com/turbomaze/word2vecjson] by [Anthony Liu](http://anthony.ai).
 
 ## License
+
 MIT License: http://igliu.mit-license.org/

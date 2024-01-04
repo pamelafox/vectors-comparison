@@ -1,0 +1,3 @@
+openai[datalib]
+azure-identity
+python-dotenv
