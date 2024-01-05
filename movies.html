@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movie title vectors in OpenAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+    <h2>Movie title embeddings in OpenAI</h2>
+    
+    <p>Expore embeddings for Disney movie titles from OpenAI ada-002 model.</p>
+
+    <form id="see-embedding-form">
+      <label>Select a movie title:
+        <input type="text" id="movie-title" list="movie-title-options" placeholder="Start typing..." style="width:250px">
+        <datalist id="movie-title-options">
+        </datalist>
+      </label>
+      <input type="submit" value="See embedding" id="see-embedding-btn" disabled>
+    </form>
+
+    <div id="model-results" class="card-group" style="margin-top:20px;">
+      Loading models...
+    </div>
+
+    <template id="template-model-result">
+      <div class="model-result card w-50">
+        <div class="card-header">
+          <h2>Movie title: <span class="movie-title"></span></h2>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Vector: <span class="vector-length"></span></h3>
+          <textarea class="vector w-100" rows="2"></textarea>
+          <br>
+          <h3>Most similar movie titles:</h3>
+          <table class="similar-vectors"></table>
+        </div>
+      </div>
+    </template>
+
+    <div style="margin-top:50px; border-top: 1px solid #ccc;">
+    <p>
+      Based on <a href="http://turbomaze.github.io/word2vecjson/">word2vecjson</a> by <a href="http://anthony.ai">Anthony Liu</a>
+    </p>
+    </div>
+
+    </div>
+
+    <script src="assets/js/vector_utils.js"></script>
+    <script src="assets/js/movies.js"></script>
+  </body>
+</html>
