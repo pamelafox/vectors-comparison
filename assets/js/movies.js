@@ -58,8 +58,8 @@ var MoviesDemo = (function() {
       wordLink.innerHTML = sim[0];
       wordLink.addEventListener('click', (e) => {
         e.preventDefault();
-        $s('#target-word').value = sim[0];
-        $s('#find-word-form').dispatchEvent(new Event('submit'));
+        $s('#movie-title').value = sim[0];
+        $s('#see-embedding-form').dispatchEvent(new Event('submit'));
       });
       wordCell.appendChild(wordLink);
       tr.appendChild(wordCell);
