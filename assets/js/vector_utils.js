@@ -8,34 +8,49 @@
 var VectorUtils = (function() {
   'use strict';
 
-  function findSimilarWords(vectors, n, word) {
-    if (!vectors.hasOwnProperty(word)) {
-      return [false, word];
+  function findRelatedTextVectors(vectors, n, targetText) {
+    // Returns [nFarthestMatches, nClosestMatches]
+    if (!vectors.hasOwnProperty(targetText)) {
+      return [false, targetText];
     }
-
-    return getNClosestMatches(
-      vectors, n, vectors[word]
-    );
+    var sims = getSims(vectors, targetText);
+    return [getNClosestMatches(sims, n), getNFarthestMatches(sims, n), sims];
   }
 
-  function getNClosestMatches(vectors, n, vec) {
+  function getSims(vectors, targetText) {
+    // Returns text:similarity map from vectors, sorted by similarity to vec
     var sims = [];
-    for (var word in vectors) {
-      var sim = getCosSim(vec, vectors[word]);
-      sims.push([word, sim]);
+    var targetVector = vectors[targetText];
+    // Loop through key,value in vectors object
+    for (const [otherText, otherVector] of Object.entries(vectors)) {
+      if (otherText == targetText) {
+        continue;
+      }
+      sims.push([otherText, getCosSim(targetVector, otherVector)]);
     }
     sims.sort(function(a, b) {
       return b[1] - a[1]; 
     });
+    return sims;
+  }
+
+  function getNClosestMatches(sims, n) {
+    // Returns n vectors that are most similar to vec
     return sims.slice(0, n);
+  }
+
+  function getNFarthestMatches(sims, n) {
+    // Returns n vectors that are least similar to vec
+    return sims.slice(-n);
   }
 
   /********************
    * helper functions */
   function getCosSim(f1, f2) {
-    return Math.abs(f1.reduce(function(sum, a, idx) {
-      return sum + a*f2[idx];
-    }, 0)/(mag(f1)*mag(f2))); //magnitude is 1 for all feature vectors
+    var dotProduct = f1.reduce(function(sum, val, i) {
+      return sum + val*f2[i];  
+    }, 0);
+    return dotProduct / (mag(f1) * mag(f2));
   }
 
   function mag(a) {
@@ -45,6 +60,6 @@ var VectorUtils = (function() {
   }
 
   return {
-    findSimilarWords: findSimilarWords
+    findRelatedTextVectors: findRelatedTextVectors
   };
 })();

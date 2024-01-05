@@ -37,14 +37,17 @@ var MoviesDemo = (function() {
 
   function renderEmbedding(movieTitle, resultsNode) {
     const embedding = MOVIE_VECTORS[movieTitle];
-    var simWords = VectorUtils.findSimilarWords(MOVIE_VECTORS, 10, movieTitle);
-        
+    var relatedVectors = VectorUtils.findRelatedTextVectors(MOVIE_VECTORS, 10, movieTitle);
+    var closestVectors = relatedVectors[0];
+    var farthestVectors = relatedVectors[1];
+
     const resultTemplate = $s('#template-model-result');
     const resultTemplateClone = resultTemplate.content.cloneNode(true);
     resultTemplateClone.querySelector(".movie-title").innerHTML = movieTitle;
     resultTemplateClone.querySelector(".vector").innerHTML = embedding.toString().replaceAll(",", ", ");
     resultTemplateClone.querySelector(".vector-length").innerHTML = embedding.length + " dimensions";
-    renderSimilarities(resultTemplateClone.querySelector(".similar-vectors"), simWords);
+    renderSimilarities(resultTemplateClone.querySelector(".most-similar-vectors"), closestVectors);
+    renderSimilarities(resultTemplateClone.querySelector(".least-similar-vectors"), farthestVectors);
     resultsNode.appendChild(resultTemplateClone);
   }
 
@@ -53,13 +56,14 @@ var MoviesDemo = (function() {
     sims.forEach(function(sim) {
       var tr = document.createElement('tr');
       const wordCell = document.createElement('td');
+      wordCell.style.width = "300px";
       const wordLink = document.createElement('a');
       wordLink.href = "#";
       wordLink.innerHTML = sim[0];
       wordLink.addEventListener('click', (e) => {
         e.preventDefault();
-        $s('#movie-title').value = sim[0];
-        $s('#see-embedding-form').dispatchEvent(new Event('submit'));
+        $s('#target-word').value = sim[0];
+        $s('#find-word-form').dispatchEvent(new Event('submit'));
       });
       wordCell.appendChild(wordLink);
       tr.appendChild(wordCell);

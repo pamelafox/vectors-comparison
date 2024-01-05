@@ -36,16 +36,31 @@ var VectorDemo = (function() {
       if (!wordVector) {
         resultsNode.innerHTML = 'No vector for that word. Try another.';
       } else {
-        var simWords = VectorUtils.findSimilarWords(WORD_VECTORS[model], NUM_TO_SHOW, word);
+        var relatedVectors = VectorUtils.findRelatedTextVectors(WORD_VECTORS[model], NUM_TO_SHOW, word);
+        var closestVectors = relatedVectors[0];
+        var farthestVectors = relatedVectors[1];
+        var allVectorValues = relatedVectors[2].map(function(sim) { return sim[1]; });
         
         const resultTemplate = $s('#template-model-result');
         const resultTemplateClone = resultTemplate.content.cloneNode(true);
         resultTemplateClone.querySelector(".model-name").innerHTML = model;
         resultTemplateClone.querySelector(".vector").innerHTML = wordVector.toString().replaceAll(",", ", ");
         resultTemplateClone.querySelector(".vector-length").innerHTML = wordVector.length + " dimensions";
-        renderSimilarities(resultTemplateClone.querySelector(".similar-vectors"), simWords);
+        renderSimilarities(resultTemplateClone.querySelector(".most-similar-vectors"), closestVectors);
+        renderSimilarities(resultTemplateClone.querySelector(".least-similar-vectors"), farthestVectors);
+        const targetNode = resultTemplateClone.querySelector(".similarity-histogram");
         resultsNode.appendChild(resultTemplateClone);
+        renderHistogram(targetNode, allVectorValues);
       }
+  }
+
+  function renderHistogram(domNode, values) {
+    var trace = {
+        x: values,
+        type: 'histogram',
+    };
+    var data = [trace];
+    Plotly.newPlot(domNode, data);
   }
 
   function renderSimilarities(domNode, sims) {
@@ -53,6 +68,7 @@ var VectorDemo = (function() {
     sims.forEach(function(sim) {
       var tr = document.createElement('tr');
       const wordCell = document.createElement('td');
+      wordCell.style.width = "180px";
       const wordLink = document.createElement('a');
       wordLink.href = "#";
       wordLink.innerHTML = sim[0];

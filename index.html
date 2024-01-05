@@ -39,8 +39,18 @@
           <h3 class="card-title">Vector: <span class="vector-length"></span></h3>
           <textarea class="vector w-100" rows="2"></textarea>
           <br>
-          <h3>Most similar words:</h3>
-          <table class="similar-vectors"></table>
+          <h3>Most similar:</h3>
+          <table class="table table-bordered border-primary">
+            <tbody class="most-similar-vectors">
+            </tbody>
+          </table>
+          <h3>Least similar:</h3>
+          <table class="table table-bordered border-primary">
+            <tbody class="least-similar-vectors">
+            </tbody>
+          </table>
+          <h3>Similarity histogram:</h3>
+          <div class="similarity-histogram" style="width: 100%; max-width:500px; height:250px;"></div>
         </div>
       </div>
     </template>
@@ -53,6 +63,7 @@
 
     </div>
 
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
     <script src="assets/js/vector_utils.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
