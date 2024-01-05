@@ -76,6 +76,10 @@ var VectorDemo = (function() {
       return response.json();
     }).then(function(json) {
       WORD_VECTORS[model] = json;
+      if (Object.keys(WORD_VECTORS).length == 2) {
+        $s('#find-word-btn').disabled = false;
+        $s('#model-results').innerHTML = "";
+      }
     }).catch(function(ex) {
       alert('Word list did not load! Please tell your local friendly developer.', ex);
     });
